@@ -1,0 +1,23 @@
+.common_btn {
+  padding: 4px 8px;
+  font-size: 13px;
+  white-space: nowrap;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  & + & {
+    margin-left: 5px;
+  }
+  &_default {
+    background-color: #ececec;
+    color: #000;
+  }
+  &_positive {
+    background-color: #64c964;
+    color: #fff;
+  }
+  &_negative {
+    background-color: #fd565f;
+    color: #fff;
+  }
+}
