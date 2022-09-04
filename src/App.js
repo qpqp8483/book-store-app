@@ -33,14 +33,45 @@ function App() {
   const [data, dispatch] = useReducer(reducer, []);
 
   useEffect(() => {
-    const bookList = {};
+    const bookList = [
+      {
+        id: 1,
+        title: "짱구는 못말려",
+        price: "12000",
+      },
+      {
+        id: 2,
+        title: "짱구는 잘말려",
+        price: "13000",
+      },
+      {
+        id: 3,
+        title: "짱구는 안말려",
+        price: "14000",
+      },
+    ];
     dispatch({ type: "INIT", data: bookList });
   }, []);
 
-  const dataId = useRef(0);
+  const dataId = useRef(4);
+
+  //CREATE
+  const onCreate = (title, price) => {
+    console.log("title" + title);
+    console.log("price" + price);
+    dispatch({
+      type: "CREATE",
+      data: {
+        id: dataId.current,
+        title: title,
+        price: price,
+      },
+    });
+    dataId.current += 1;
+  };
 
   return (
-    <DiaryStateContext.Provider>
+    <DiaryStateContext.Provider value={{ onCreate }}>
       <DiaryDispatchContext.Provider value={data}>
         <BrowserRouter>
           <div className="App">

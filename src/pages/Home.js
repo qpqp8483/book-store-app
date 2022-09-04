@@ -1,12 +1,34 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import BookItem from "../components/bookItem/BookItem";
+import CoinPopup from "../components/coinPopup/CoinPopup";
 import { bookSearch } from "../KakaoApi";
+import { DiaryDispatchContext } from "../App";
+import Basket from "./Basket";
+import "./home.scss";
 
 const Home = () => {
+  const diaryList = useContext(DiaryDispatchContext);
   const [books, setBooks] = useState([]); // 책 리스트 state 기본값 설정
   const [listUpdate, setListUpdate] = useState(true); // 책 리스트 업데이트될때 상태변환 설정
   const [queryText, setQueryText] = useState("");
   const [text, setText] = useState("");
+  const [coin, setCoin] = useState("");
+  const [coinSubmit, setCoinSubmit] = useState(false);
+
+  const coinChange = (e) => {
+    if (e > 1000000) {
+      alert("100만원을 초과할 수 없습니다.");
+      return;
+    } else {
+      setCoin(e);
+      console.log(coin);
+    }
+  };
+
+  const coinValue = (e) => {
+    setCoinSubmit(e);
+    console.log(e);
+  };
 
   useEffect(() => {
     if (queryText.length > 0) {
@@ -37,7 +59,13 @@ const Home = () => {
   };
 
   return (
-    <div>
+    <div className="search_section">
+      <CoinPopup
+        coin={coin}
+        coinChange={coinChange}
+        coinValue={coinValue}
+        coinSubmit={coinSubmit}
+      />
       <div>
         <form action="#" onSubmit={handleSubmit} className="search_box">
           <div>
@@ -55,6 +83,7 @@ const Home = () => {
           ))}
         </div>
       </div>
+      <Basket coin={coin} coinSubmit={coinSubmit} data={diaryList} />
     </div>
   );
 };
