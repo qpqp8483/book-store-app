@@ -16,6 +16,12 @@ const reducer = (state, action) => {
       newState = [newItem, ...state];
       break;
     }
+    case "EDIT": {
+      let numCounting = state.filter((item) => item.id === action.data.id);
+      console.log(numCounting);
+
+      break;
+    }
     case "REMOVE": {
       newState = state.filter((it) => it.id !== action.targetId);
       break;
@@ -38,16 +44,19 @@ function App() {
         id: 1,
         title: "짱구는 못말려",
         price: "12000",
+        num: 1,
       },
       {
         id: 2,
         title: "짱구는 잘말려",
         price: "13000",
+        num: 1,
       },
       {
         id: 3,
         title: "짱구는 안말려",
         price: "14000",
+        num: 1,
       },
     ];
     dispatch({ type: "INIT", data: bookList });
@@ -57,21 +66,28 @@ function App() {
 
   //CREATE
   const onCreate = (title, price) => {
-    console.log("title" + title);
-    console.log("price" + price);
-    dispatch({
-      type: "CREATE",
-      data: {
-        id: dataId.current,
-        title: title,
-        price: price,
-      },
-    });
-    dataId.current += 1;
+    let dataFilter = data.filter((item) => item.title === title);
+    if (dataFilter.length > 0) {
+      alert("이미 장바구니에 담긴 책 입니다.");
+    } else {
+      dispatch({
+        type: "CREATE",
+        data: {
+          id: dataId.current,
+          title: title,
+          price: price,
+        },
+      });
+      dataId.current += 1;
+    }
+  };
+  const onEdit = (id) => {
+    let numFilter = data.filter((item) => item.id === id);
+    console.log(numFilter);
   };
 
   return (
-    <DiaryStateContext.Provider value={{ onCreate }}>
+    <DiaryStateContext.Provider value={{ onCreate, onEdit }}>
       <DiaryDispatchContext.Provider value={data}>
         <BrowserRouter>
           <div className="App">

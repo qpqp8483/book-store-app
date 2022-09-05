@@ -1,8 +1,14 @@
-import React from "react";
+import React, { useContext } from "react";
 import CommonButton from "../components/button/CommonButton";
+import { DiaryStateContext } from "../App";
 import "./basket.scss";
 
 const Basket = ({ coinSubmit, coin, data }) => {
+  const { onEdit } = useContext(DiaryStateContext);
+  const numHandle = (e) => {
+    onEdit(e);
+    console.log(e);
+  };
   console.log(data);
   return (
     <div className="basket_box">
@@ -36,10 +42,14 @@ const Basket = ({ coinSubmit, coin, data }) => {
                 </td>
                 <td>
                   <div className="num_box">
-                    <input type="text" />
+                    <input
+                      type="text"
+                      value={item.num}
+                      onChange={(e) => numHandle(e.target.value)}
+                    />
                     <div className="num_control">
-                      <span>△</span>
-                      <span>▽</span>
+                      <span onClick={() => numHandle(true)}>△</span>
+                      <span onClick={() => numHandle(false)}>▽</span>
                     </div>
                   </div>
                 </td>
