@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useMemo, useState } from "react";
 import BookItem from "../components/bookItem/BookItem";
 import CoinPopup from "../components/coinPopup/CoinPopup";
 import { bookSearch } from "../KakaoApi";
@@ -15,7 +15,7 @@ const Home = () => {
   const [coin, setCoin] = useState("");
   const [coinSubmit, setCoinSubmit] = useState(false);
 
-  const coinChange = (e) => {
+  const coinChange = useMemo((e) => {
     if (e > 1000000) {
       alert("100만원을 초과할 수 없습니다.");
       return;
@@ -23,7 +23,7 @@ const Home = () => {
       setCoin(e);
       console.log(coin);
     }
-  };
+  }, []);
 
   const coinValue = (e) => {
     setCoinSubmit(e);
