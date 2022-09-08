@@ -60,12 +60,13 @@ const Home = () => {
 
   return (
     <div className="search_section">
-      <CoinPopup
+      {/* <CoinPopup
         coin={coin}
         coinChange={coinChange}
         coinValue={coinValue}
         coinSubmit={coinSubmit}
-      />
+      /> */}
+      <div></div>
       <div>
         <form action="#" onSubmit={handleSubmit} className="search_box">
           <div>

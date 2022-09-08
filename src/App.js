@@ -17,9 +17,9 @@ const reducer = (state, action) => {
       break;
     }
     case "EDIT": {
-      let numCounting = state.filter((item) => item.id === action.data.id);
-      console.log(numCounting);
-
+      newState = state.map((it) =>
+        it.id === action.data.id ? { ...action.data } : it
+      );
       break;
     }
     case "REMOVE": {
@@ -76,18 +76,23 @@ function App() {
           id: dataId.current,
           title: title,
           price: price,
+          num: 1,
         },
       });
       dataId.current += 1;
     }
   };
-  const onEdit = (id) => {
-    let numFilter = data.filter((item) => item.id === id);
-    console.log(numFilter);
+
+  //REMOVE
+  const onRemove = (targetId) => {
+    dispatch({
+      type: "REMOVE",
+      targetId,
+    });
   };
 
   return (
-    <DiaryStateContext.Provider value={{ onCreate, onEdit }}>
+    <DiaryStateContext.Provider value={{ onCreate, onRemove }}>
       <DiaryDispatchContext.Provider value={data}>
         <BrowserRouter>
           <div className="App">
