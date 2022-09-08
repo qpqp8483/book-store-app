@@ -1,7 +1,7 @@
 import React from "react";
 import "./commonButton.scss";
 
-const CommonButton = ({ text, type, onClick }) => {
+const CommonButton = ({ text, type, align, onClick }) => {
   const btnType = ["positive", "negative"].includes(type) ? type : "default";
   return (
     <button

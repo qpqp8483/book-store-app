@@ -6,12 +6,14 @@ import "./basket.scss";
 const Basket = ({ coinSubmit, coin, data }) => {
   const { onRemove } = useContext(DiaryStateContext);
   const [num, setNum] = useState({ name: 1 });
+  // 상품 수량 갯수 > 0 일때 함수
   const numHandleFnPositive = (e) => {
     setNum({
       ...num,
       [e.target.name]: parseInt(e.target.value),
     });
   };
+  // 상품 수량 갯수 <= 0 일때 함수
   const numHandleFnNegative = (e) => {
     if (parseInt(e.target.value) === 0) {
       alert("최소갯수는 1개이상부터입니다.");
@@ -26,6 +28,7 @@ const Basket = ({ coinSubmit, coin, data }) => {
       });
     }
   };
+  // 수량 input focus out 될떼 함수
   const blurHandle = (e) => {
     console.log(e.target.value);
     if (e.target.value === "") {
@@ -35,6 +38,7 @@ const Basket = ({ coinSubmit, coin, data }) => {
       });
     }
   };
+  // input 옆 숫자 카운터 함수
   const numCount = (e) => {
     let countType = e.target.parentNode.previousSibling;
     if (e.target.className === "count_up") {
@@ -133,7 +137,7 @@ const Basket = ({ coinSubmit, coin, data }) => {
                     <div className="basket_btn_box">
                       <CommonButton
                         type={"negative"}
-                        text={"삭제"}
+                        text={"삭제하기"}
                         onClick={() => onRemove(item.id)}
                       />
                     </div>
@@ -143,6 +147,9 @@ const Basket = ({ coinSubmit, coin, data }) => {
             )}
           </tbody>
         </table>
+      </div>
+      <div className="align_right">
+        <CommonButton type={"positive"} text={"구매하기"} onClick={() => {}} />
       </div>
     </div>
   );

@@ -15,19 +15,17 @@ const Home = () => {
   const [coin, setCoin] = useState("");
   const [coinSubmit, setCoinSubmit] = useState(false);
 
-  const coinChange = useMemo((e) => {
+  const coinChange = (e) => {
     if (e > 1000000) {
       alert("100만원을 초과할 수 없습니다.");
       return;
     } else {
       setCoin(e);
-      console.log(coin);
     }
-  }, []);
+  };
 
   const coinValue = (e) => {
     setCoinSubmit(e);
-    console.log(e);
   };
 
   useEffect(() => {
@@ -46,7 +44,6 @@ const Home = () => {
     const { data } = await bookSearch(params); // api 호출
     if (reset) {
       setBooks(data.documents);
-      console.log(data.documents);
     } else {
       setBooks(books.concat(data.documents));
     }
@@ -60,13 +57,12 @@ const Home = () => {
 
   return (
     <div className="search_section">
-      {/* <CoinPopup
+      <CoinPopup
         coin={coin}
         coinChange={coinChange}
         coinValue={coinValue}
         coinSubmit={coinSubmit}
-      /> */}
-      <div></div>
+      />
       <div>
         <form action="#" onSubmit={handleSubmit} className="search_box">
           <div>
