@@ -28,6 +28,10 @@ const Home = () => {
     setCoinSubmit(e);
   };
 
+  const coinPayment = (stateCoin, actionCoin) => {
+    setCoin(stateCoin - actionCoin);
+  };
+
   useEffect(() => {
     if (queryText.length > 0) {
       kakaoSearch(queryText, true); // 컴포넌트 마운트 후에, 함수를 호출한다.
@@ -80,7 +84,12 @@ const Home = () => {
           ))}
         </div>
       </div>
-      <Basket coin={coin} coinSubmit={coinSubmit} data={diaryList} />
+      <Basket
+        coin={coin}
+        coinSubmit={coinSubmit}
+        data={diaryList}
+        coinPayment={coinPayment}
+      />
     </div>
   );
 };

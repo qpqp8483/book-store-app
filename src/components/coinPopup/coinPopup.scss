@@ -31,6 +31,14 @@
         border: 1px solid #555;
         border-radius: 5px;
         box-sizing: border-box;
+        &::-webkit-outer-spin-button,
+        &::-webkit-inner-spin-button {
+          -webkit-appearance: none;
+          margin: 0;
+        }
+        &[type="number"] {
+          -moz-appearance: textfield;
+        }
       }
       button {
         padding: 0 10px;

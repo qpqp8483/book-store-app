@@ -12,11 +12,11 @@ const reducer = (state, action) => {
       return action.data;
     }
     case "CREATE": {
-      const newItem = { ...action.data };
-      newState = [newItem, ...state];
+      newState = [{ ...action.data }, ...state];
       break;
     }
     case "EDIT": {
+      console.log(action);
       newState = state.map((it) =>
         it.id === action.data.id ? { ...action.data } : it
       );
@@ -89,9 +89,9 @@ function App() {
       type: "EDIT",
       data: {
         id: targetId,
-        title,
-        price,
-        num,
+        title: title,
+        price: price,
+        num: num,
       },
     });
   };

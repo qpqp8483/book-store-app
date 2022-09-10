@@ -6,8 +6,8 @@ const CoinPopup = ({ coin, coinChange, coinValue, coinSubmit }) => {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (coin.length < 1) {
-      alert("1원 이상의 금액을 설정하여 주세요");
+    if (coin < 100) {
+      alert("100원 이상의 금액을 설정하여 주세요");
       return;
     } else {
       coinValue(true);
