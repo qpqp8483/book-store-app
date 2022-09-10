@@ -83,6 +83,19 @@ function App() {
     }
   };
 
+  //EDIT
+  const onEdit = (num, title, price, targetId) => {
+    dispatch({
+      type: "EDIT",
+      data: {
+        id: targetId,
+        title,
+        price,
+        num,
+      },
+    });
+  };
+
   //REMOVE
   const onRemove = (targetId) => {
     dispatch({
@@ -92,7 +105,7 @@ function App() {
   };
 
   return (
-    <DiaryStateContext.Provider value={{ onCreate, onRemove }}>
+    <DiaryStateContext.Provider value={{ onCreate, onEdit, onRemove }}>
       <DiaryDispatchContext.Provider value={data}>
         <BrowserRouter>
           <div className="App">

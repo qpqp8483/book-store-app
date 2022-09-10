@@ -1,21 +1,24 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import CommonButton from "../components/button/CommonButton";
 import { DiaryStateContext } from "../App";
 import "./basket.scss";
 
 const Basket = ({ coinSubmit, coin, data }) => {
-  const { onRemove } = useContext(DiaryStateContext);
+  const { onEdit, onRemove } = useContext(DiaryStateContext);
+  const [totalPrice, setTotalPrice] = useState(0);
   const [num, setNum] = useState({ name: 1 });
   // 상품 수량 갯수 > 0 일때 함수
-  const numHandleFnPositive = (e) => {
+  const numHandleFnPositive = (e, targetTitle, targetPrice, targetId) => {
     setNum({
       ...num,
       [e.target.name]: parseInt(e.target.value),
     });
+    onEdit(parseInt(e.target.value), targetTitle, targetPrice, targetId);
   };
   // 상품 수량 갯수 <= 0 일때 함수
-  const numHandleFnNegative = (e) => {
+  const numHandleFnNegative = (e, targetTitle, targetPrice, targetId) => {
     if (parseInt(e.target.value) === 0) {
+      onEdit(1, targetTitle, targetPrice, targetId);
       alert("최소갯수는 1개이상부터입니다.");
       setNum({
         ...num,
@@ -53,6 +56,27 @@ const Basket = ({ coinSubmit, coin, data }) => {
       });
     }
   };
+  useEffect(() => {
+    let priceList = [];
+    let addPrice;
+    data.map((item) => {
+      priceList.push(parseInt(item.price * item.num));
+      addPrice = priceList
+        .reduce((a, b) => a + b)
+        .toString()
+        .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    });
+    setTotalPrice(addPrice);
+  }, [data]);
+  // 구매하기 함수
+  // const bookCal = () => {
+  //   let priceList = [];
+  //   data.map((item) => {
+  //     priceList.push(parseInt(item.price));
+  //   });
+  //   console.log(priceList.reduce((a, b) => a + b));
+  // };
+
   return (
     <div className="basket_box">
       <div className="wallet">보유금액 : {coinSubmit ? coin : `0`}원</div>
@@ -97,11 +121,17 @@ const Basket = ({ coinSubmit, coin, data }) => {
                             ? num[`neme_${item.id}`]
                             : num.name
                         }
-                        onChange={(e) =>
+                        onChange={(e) => {
                           e.target.value >= 1
-                            ? numHandleFnPositive(e)
-                            : numHandleFnNegative(e)
-                        }
+                            ? numHandleFnPositive(
+                                e,
+                                item.title,
+                                item.price,
+                                item.id
+                              )
+                            : numHandleFnNegative(e);
+                          console.log(item);
+                        }}
                         onBlur={(e) => {
                           blurHandle(e);
                         }}
@@ -148,8 +178,13 @@ const Basket = ({ coinSubmit, coin, data }) => {
           </tbody>
         </table>
       </div>
-      <div className="align_right">
-        <CommonButton type={"positive"} text={"구매하기"} onClick={() => {}} />
+      <div className="basket_under">
+        <span className="total_price">총 금액 : {totalPrice}원</span>
+        <CommonButton
+          type={"positive"}
+          text={"구매하기"}
+          //onClick={() => bookCal()}
+        />
       </div>
     </div>
   );
