@@ -3,21 +3,18 @@ import CommonButton from "../components/button/CommonButton";
 import { DiaryStateContext } from "../App";
 import "./basket.scss";
 
-const Basket = ({ coinSubmit, coin, data, coinPayment }) => {
+const Basket = ({ num, setNum, coinSubmit, coin, data, coinPayment }) => {
   const { onEdit, onRemove } = useContext(DiaryStateContext);
   const [totalPrice, setTotalPrice] = useState(0);
-  const [num, setNum] = useState({ name: 1 });
 
   // 상품 수량 갯수 > 0 일때 함수
-  const numHandleFnPositive = (e, targetTitle, targetPrice, targetId) => {
+  const numHandleFnPositive = (e) => {
     setNum({ ...num, [e.target.name]: parseInt(e.target.value) });
-    onEdit(parseInt(e.target.value), targetTitle, targetPrice, targetId);
   };
 
   // 상품 수량 갯수 <= 0 일때 함수
-  const numHandleFnNegative = (e, targetTitle, targetPrice, targetId) => {
+  const numHandleFnNegative = (e) => {
     if (parseInt(e.target.value) === 0) {
-      onEdit(1, targetTitle, targetPrice, targetId);
       alert("최소갯수는 1개이상부터입니다.");
       setNum({ ...num, [e.target.name]: 1 });
     } else {
@@ -33,33 +30,18 @@ const Basket = ({ coinSubmit, coin, data, coinPayment }) => {
   };
 
   // input 옆 숫자 카운터 함수
-  const numCount = (e, targetTitle, targetPrice, targetId) => {
+  const numCount = (e) => {
     let countType = e.target.parentNode.previousSibling;
-    let numState;
-    const numEdit = num[`neme_${targetId}`] || 1;
     if (e.target.className === "count_up") {
       setNum({ ...num, [countType.name]: parseInt(countType.value) + 1 });
-      numState = true;
     } else {
-      setNum({
-        ...num,
-        [countType.name]:
-          parseInt(countType.value) > 1
-            ? parseInt(countType.value) - 1
-            : alert("최소구매는 1개 이상입니다.") && 1,
-      });
-      numState = false;
+      if (parseInt(countType.value) > 1) {
+        setNum({ ...num, [countType.name]: parseInt(countType.value) - 1 });
+      } else {
+        alert("최소구매는 1개 이상입니다.");
+        setNum({ ...num, [countType.name]: 1 });
+      }
     }
-    onEdit(
-      numState
-        ? numEdit + 1
-        : numEdit > 1
-        ? numEdit - 1
-        : num[`neme_${targetId}`],
-      targetTitle,
-      targetPrice,
-      targetId
-    );
   };
 
   useEffect(() => {
@@ -131,26 +113,12 @@ const Basket = ({ coinSubmit, coin, data, coinPayment }) => {
                       <input
                         className="num_input"
                         type="number"
-                        name={`neme_${item.id}`}
-                        value={
-                          num[`neme_${item.id}`] > -1
-                            ? num[`neme_${item.id}`]
-                            : num.name
-                        }
+                        name={item.name}
+                        value={num[item.name]}
                         onChange={(e) => {
                           e.target.value >= 1
-                            ? numHandleFnPositive(
-                                e,
-                                item.title,
-                                item.price,
-                                item.id
-                              )
-                            : numHandleFnNegative(
-                                e,
-                                item.title,
-                                item.price,
-                                item.id
-                              );
+                            ? numHandleFnPositive(e)
+                            : numHandleFnNegative(e);
                         }}
                         onBlur={(e) => {
                           blurHandle(e);

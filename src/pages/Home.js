@@ -14,6 +14,7 @@ const Home = () => {
   const [text, setText] = useState("");
   const [coin, setCoin] = useState("");
   const [coinSubmit, setCoinSubmit] = useState(false);
+  const [num, setNum] = useState({});
 
   const coinChange = (e) => {
     if (e > 1000000) {
@@ -59,6 +60,13 @@ const Home = () => {
     setListUpdate(false);
   };
 
+  const numChange = (isbn) => {
+    setNum({
+      ...num,
+      [isbn]: 1,
+    });
+  };
+
   return (
     <div className="search_section">
       <CoinPopup
@@ -80,11 +88,13 @@ const Home = () => {
         </form>
         <div className="book_list">
           {books.map((book, index) => (
-            <BookItem book={book} key={index} />
+            <BookItem book={book} key={index} numChange={numChange} />
           ))}
         </div>
       </div>
       <Basket
+        num={num}
+        setNum={setNum}
         coin={coin}
         coinSubmit={coinSubmit}
         data={diaryList}

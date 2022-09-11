@@ -12,7 +12,7 @@ const reducer = (state, action) => {
       return action.data;
     }
     case "CREATE": {
-      newState = [{ ...action.data }, ...state];
+      newState = [...state, { ...action.data }];
       break;
     }
     case "EDIT": {
@@ -39,33 +39,14 @@ function App() {
   const [data, dispatch] = useReducer(reducer, []);
 
   useEffect(() => {
-    const bookList = [
-      {
-        id: 1,
-        title: "짱구는 못말려",
-        price: "12000",
-        num: 1,
-      },
-      {
-        id: 2,
-        title: "짱구는 잘말려",
-        price: "13000",
-        num: 1,
-      },
-      {
-        id: 3,
-        title: "짱구는 안말려",
-        price: "14000",
-        num: 1,
-      },
-    ];
+    const bookList = [];
     dispatch({ type: "INIT", data: bookList });
   }, []);
 
-  const dataId = useRef(4);
+  const dataId = useRef(1);
 
   //CREATE
-  const onCreate = (title, price) => {
+  const onCreate = (title, price, isbn) => {
     let dataFilter = data.filter((item) => item.title === title);
     if (dataFilter.length > 0) {
       alert("이미 장바구니에 담긴 책 입니다.");
@@ -74,6 +55,7 @@ function App() {
         type: "CREATE",
         data: {
           id: dataId.current,
+          name: isbn,
           title: title,
           price: price,
           num: 1,

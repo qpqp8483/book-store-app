@@ -5,15 +5,18 @@ import CommonButton from "../button/CommonButton";
 import { DiaryStateContext } from "../../App";
 import "./bookItem.scss";
 
-const BookItem = ({ book }) => {
+const BookItem = ({ book, numChange }) => {
   const { onCreate } = useContext(DiaryStateContext);
   const content_length = book.contents.slice(0, 80);
   const onErrorImg = (e) => {
     e.target.src = default_img;
   };
-  const handleSubmit = (title, price) => {
-    onCreate(title, price);
+  const handleSubmit = (title, price, isbn) => {
+    onCreate(title, price, isbn);
+    console.log(book);
+    numChange(isbn);
   };
+
   return (
     <div className="book_item">
       <span className="img_box">
@@ -44,7 +47,7 @@ const BookItem = ({ book }) => {
           <CommonButton
             type={"positive"}
             text={"구매하기"}
-            onClick={() => handleSubmit(book.title, book.sale_price)}
+            onClick={() => handleSubmit(book.title, book.sale_price, book.isbn)}
           />
         </div>
       </div>
