@@ -26,6 +26,10 @@ const reducer = (state, action) => {
       newState = state.filter((it) => it.id !== action.targetId);
       break;
     }
+    case "RESET": {
+      newState = [];
+      break;
+    }
     default:
       return state;
   }
@@ -86,8 +90,15 @@ function App() {
     });
   };
 
+  //RESET
+  const onReset = () => {
+    dispatch({
+      type: "RESET",
+    });
+  };
+
   return (
-    <DiaryStateContext.Provider value={{ onCreate, onEdit, onRemove }}>
+    <DiaryStateContext.Provider value={{ onCreate, onEdit, onRemove, onReset }}>
       <DiaryDispatchContext.Provider value={data}>
         <BrowserRouter>
           <div className="App">

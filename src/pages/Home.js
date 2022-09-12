@@ -2,12 +2,13 @@ import React, { useContext, useEffect, useMemo, useState } from "react";
 import BookItem from "../components/bookItem/BookItem";
 import CoinPopup from "../components/coinPopup/CoinPopup";
 import { bookSearch } from "../KakaoApi";
-import { DiaryDispatchContext } from "../App";
+import { DiaryDispatchContext, DiaryStateContext } from "../App";
 import Basket from "./Basket";
 import "./home.scss";
 
 const Home = () => {
   const diaryList = useContext(DiaryDispatchContext);
+  const { onReset } = useContext(DiaryStateContext);
   const [books, setBooks] = useState([]); // 책 리스트 state 기본값 설정
   const [listUpdate, setListUpdate] = useState(true); // 책 리스트 업데이트될때 상태변환 설정
   const [queryText, setQueryText] = useState("");
@@ -31,6 +32,8 @@ const Home = () => {
 
   const coinPayment = (stateCoin, actionCoin) => {
     setCoin(stateCoin - actionCoin);
+    onReset();
+    setNum({});
   };
 
   useEffect(() => {
@@ -99,6 +102,7 @@ const Home = () => {
         coinSubmit={coinSubmit}
         data={diaryList}
         coinPayment={coinPayment}
+        coinValue={coinValue}
       />
     </div>
   );

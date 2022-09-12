@@ -5,6 +5,8 @@
   height: 100%;
 }
 .wallet {
+  display: flex;
+  justify-content: space-between;
   margin-bottom: 15px;
   padding: 10px;
   font-weight: bold;
@@ -39,7 +41,7 @@
       }
       h5 {
         margin: 0;
-        max-width: 296px;
+        max-width: 530px;
         font-size: 16px;
         overflow: hidden;
         text-overflow: ellipsis;

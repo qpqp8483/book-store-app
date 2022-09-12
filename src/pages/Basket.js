@@ -3,8 +3,16 @@ import CommonButton from "../components/button/CommonButton";
 import { DiaryStateContext } from "../App";
 import "./basket.scss";
 
-const Basket = ({ num, setNum, coinSubmit, coin, data, coinPayment }) => {
-  const { onEdit, onRemove } = useContext(DiaryStateContext);
+const Basket = ({
+  num,
+  setNum,
+  coinSubmit,
+  coin,
+  data,
+  coinPayment,
+  coinValue,
+}) => {
+  const { onRemove } = useContext(DiaryStateContext);
   const [totalPrice, setTotalPrice] = useState(0);
 
   // 상품 수량 갯수 > 0 일때 함수
@@ -48,35 +56,46 @@ const Basket = ({ num, setNum, coinSubmit, coin, data, coinPayment }) => {
     let priceList = [];
     let addPrice;
     data.map((item) => {
-      priceList.push(parseInt(item.price * item.num));
+      priceList.push(parseInt(item.price * num[item.name]));
       addPrice = priceList
         .reduce((a, b) => a + b)
         .toString()
         .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     });
-    setTotalPrice(addPrice);
-  }, [data]);
+    data.length > 0 ? setTotalPrice(addPrice) : setTotalPrice(0);
+  }, [num]);
 
   // 구매하기 함수
   const bookCal = () => {
-    let priceList = [];
-    data.map((item) => priceList.push(parseInt(item.price * item.num)));
-    let coinAction = priceList.reduce((a, b) => a + b);
-    if (coin >= coinAction) {
-      coinPayment(coin, coinAction);
+    if (data.length > 0) {
+      let priceList = [];
+      data.map((item) => priceList.push(parseInt(item.price * num[item.name])));
+      let coinAction = priceList.reduce((a, b) => a + b);
+      if (coin >= coinAction) {
+        coinPayment(coin, coinAction);
+      } else {
+        alert("충전금액이 모자랍니다. 충전을 해주세요!");
+      }
     } else {
-      alert("충전금액이 모자랍니다. 충전을 해주세요!");
+      alert("구매하실 품목을 확인해주세요!");
     }
   };
 
   return (
     <div className="basket_box">
       <div className="wallet">
-        보유금액 :{" "}
-        {coinSubmit
-          ? coin.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-          : `0`}
-        원
+        <span>
+          보유금액 :{" "}
+          {coinSubmit
+            ? coin.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+            : `0`}
+          원
+        </span>
+        <CommonButton
+          type={"positive"}
+          text={"충전하기"}
+          onClick={() => coinValue(false)}
+        />
       </div>
       <div className="basket">
         <table>
@@ -146,7 +165,7 @@ const Basket = ({ num, setNum, coinSubmit, coin, data, coinPayment }) => {
                   </td>
                   <td>
                     <p className="price">
-                      {item.price
+                      {(item.price * num[item.name])
                         .toString()
                         .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
                     </p>
