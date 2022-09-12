@@ -3,38 +3,24 @@ import BookItem from "../components/bookItem/BookItem";
 import CoinPopup from "../components/coinPopup/CoinPopup";
 import { bookSearch } from "../KakaoApi";
 import { DiaryDispatchContext, DiaryStateContext } from "../App";
-import Basket from "./Basket";
 import "./home.scss";
 
 const Home = () => {
-  const diaryList = useContext(DiaryDispatchContext);
+  const {
+    data,
+    num,
+    setNum,
+    coin,
+    coinSubmit,
+    coinPayment,
+    coinValue,
+    setCoin,
+  } = useContext(DiaryDispatchContext);
   const { onReset } = useContext(DiaryStateContext);
   const [books, setBooks] = useState([]); // 책 리스트 state 기본값 설정
   const [listUpdate, setListUpdate] = useState(true); // 책 리스트 업데이트될때 상태변환 설정
   const [queryText, setQueryText] = useState("");
   const [text, setText] = useState("");
-  const [coin, setCoin] = useState("");
-  const [coinSubmit, setCoinSubmit] = useState(false);
-  const [num, setNum] = useState({});
-
-  const coinChange = (e) => {
-    if (e > 1000000) {
-      alert("100만원을 초과할 수 없습니다.");
-      return;
-    } else {
-      setCoin(e);
-    }
-  };
-
-  const coinValue = (e) => {
-    setCoinSubmit(e);
-  };
-
-  const coinPayment = (stateCoin, actionCoin) => {
-    setCoin(stateCoin - actionCoin);
-    onReset();
-    setNum({});
-  };
 
   useEffect(() => {
     if (queryText.length > 0) {
@@ -54,6 +40,15 @@ const Home = () => {
       setBooks(data.documents);
     } else {
       setBooks(books.concat(data.documents));
+    }
+  };
+
+  const coinChange = (e) => {
+    if (e > 1000000) {
+      alert("100만원을 초과할 수 없습니다.");
+      return;
+    } else {
+      setCoin(e);
     }
   };
 
@@ -95,15 +90,6 @@ const Home = () => {
           ))}
         </div>
       </div>
-      <Basket
-        num={num}
-        setNum={setNum}
-        coin={coin}
-        coinSubmit={coinSubmit}
-        data={diaryList}
-        coinPayment={coinPayment}
-        coinValue={coinValue}
-      />
     </div>
   );
 };

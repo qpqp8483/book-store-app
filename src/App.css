@@ -1,9 +1,50 @@
+@charset "utf-8";
+
+/* font */
+@font-face {
+  font-family: "NotoSansKR";
+  font-weight: 100;
+  src: url("../src/assets/font/NotoSansKR-Thin.otf") format("otf");
+}
+@font-face {
+  font-family: "NotoSansKR";
+  font-weight: 200;
+  src: url("../src/assets/font/NotoSansKR-Light.otf") format("otf");
+}
+@font-face {
+  font-family: "NotoSansKR";
+  font-weight: 300;
+  src: url("../src/assets/font/NotoSansKR-Regular.otf") format("otf");
+}
+@font-face {
+  font-family: "NotoSansKR";
+  font-weight: 400;
+  src: url("../src/assets/font/NotoSansKR-Medium.otf") format("otf");
+}
+@font-face {
+  font-family: "NotoSansKR";
+  font-weight: 500;
+  src: url("../src/assets/font/NotoSansKR-Bold.otf") format("otf");
+}
+@font-face {
+  font-family: "NotoSansKR";
+  font-weight: 600;
+  src: url("../src/assets/font/NotoSansKR-Black.otf") format("otf");
+}
+
 html,
 body {
   height: 100%;
 }
 #root {
   height: 100%;
+}
+.App {
+  margin: auto;
+  padding: 20px;
+  width: 1200px;
+  font-family: "NotoSansKR";
+  border: 1px solid #333;
 }
 
 .align_right {

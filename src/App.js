@@ -1,9 +1,11 @@
 import "./App.css";
-import React, { useEffect, useReducer, useRef } from "react";
+import "../src/assets/css/reset.css";
+import React, { useEffect, useReducer, useRef, useState } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 import Home from "./pages/Home";
 import Basket from "./pages/Basket";
+import Header from "./components/header/Header";
 
 const reducer = (state, action) => {
   let newState = [];
@@ -41,6 +43,9 @@ export const DiaryDispatchContext = React.createContext();
 
 function App() {
   const [data, dispatch] = useReducer(reducer, []);
+  const [coin, setCoin] = useState("");
+  const [coinSubmit, setCoinSubmit] = useState(false);
+  const [num, setNum] = useState({});
 
   useEffect(() => {
     const bookList = [];
@@ -97,14 +102,36 @@ function App() {
     });
   };
 
+  const coinValue = (e) => {
+    setCoinSubmit(e);
+  };
+
+  const coinPayment = (stateCoin, actionCoin) => {
+    setCoin(stateCoin - actionCoin);
+    onReset();
+    setNum({});
+  };
+
   return (
     <DiaryStateContext.Provider value={{ onCreate, onEdit, onRemove, onReset }}>
-      <DiaryDispatchContext.Provider value={data}>
+      <DiaryDispatchContext.Provider
+        value={{
+          data,
+          num,
+          setNum,
+          coin,
+          coinSubmit,
+          coinPayment,
+          coinValue,
+          setCoin,
+        }}
+      >
         <BrowserRouter>
           <div className="App">
+            <Header />
             <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/" element={<Basket />} />
+              <Route exact path="/" element={<Home />} />
+              <Route path="/basket" element={<Basket />} />
             </Routes>
           </div>
         </BrowserRouter>

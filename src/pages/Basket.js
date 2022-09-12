@@ -1,17 +1,19 @@
 import React, { useContext, useEffect, useState } from "react";
 import CommonButton from "../components/button/CommonButton";
-import { DiaryStateContext } from "../App";
+import { DiaryDispatchContext, DiaryStateContext } from "../App";
 import "./basket.scss";
 
-const Basket = ({
-  num,
-  setNum,
-  coinSubmit,
-  coin,
-  data,
-  coinPayment,
-  coinValue,
-}) => {
+const Basket = () => {
+  const {
+    data,
+    num,
+    setNum,
+    coin,
+    coinSubmit,
+    coinPayment,
+    coinValue,
+    setCoin,
+  } = useContext(DiaryDispatchContext);
   const { onRemove } = useContext(DiaryStateContext);
   const [totalPrice, setTotalPrice] = useState(0);
 
