@@ -85,20 +85,6 @@ const Basket = () => {
 
   return (
     <div className="basket_box">
-      <div className="wallet">
-        <span>
-          보유금액 :{" "}
-          {coinSubmit
-            ? coin.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-            : `0`}
-          원
-        </span>
-        <CommonButton
-          type={"positive"}
-          text={"충전하기"}
-          onClick={() => coinValue(false)}
-        />
-      </div>
       <div className="basket">
         <table>
           <caption>구매 리스트 정보</caption>

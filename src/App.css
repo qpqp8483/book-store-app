@@ -41,7 +41,7 @@ body {
 }
 .App {
   margin: auto;
-  padding: 20px;
+  padding: 0 20px 20px;
   width: 1200px;
   font-family: "NotoSansKR";
   border: 1px solid #333;
