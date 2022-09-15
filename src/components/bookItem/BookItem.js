@@ -27,29 +27,29 @@ const BookItem = ({ book, numChange }) => {
         />
       </span>
       <div>
-        <Link to="/" className="title">
-          {book.title}
-        </Link>
+        <h3 className="title">{book.title}</h3>
+        <span className="authors">{book.authors}</span>
+        <p>
+          {content_length.length < 1
+            ? "내용 정보가 없습니다."
+            : `${content_length}...`}
+        </p>
         <ul>
-          <li>{book.authors}</li>
           <li>
             {book.sale_price < 0
-              ? "금액 정보가 없습니다."
-              : `${book.sale_price} 원`}
+              ? " 금액 정보가 없습니다."
+              : ` ${book.sale_price} 원`}
           </li>
           <li>
-            {content_length.length < 1
-              ? "내용 정보가 없습니다."
-              : `${content_length}...`}
+            <CommonButton
+              type={"positive"}
+              text={"담기"}
+              onClick={() =>
+                handleSubmit(book.title, book.sale_price, book.isbn)
+              }
+            />
           </li>
         </ul>
-        <div>
-          <CommonButton
-            type={"positive"}
-            text={"구매하기"}
-            onClick={() => handleSubmit(book.title, book.sale_price, book.isbn)}
-          />
-        </div>
       </div>
     </div>
   );

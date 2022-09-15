@@ -54,7 +54,7 @@
   margin: auto;
   box-sizing: border-box;
 
-  span {
+  & > span {
     display: block;
     font-size: 18px;
     text-align: center;
