@@ -4,16 +4,8 @@ import { DiaryDispatchContext, DiaryStateContext } from "../App";
 import "./basket.scss";
 
 const Basket = () => {
-  const {
-    data,
-    num,
-    setNum,
-    coin,
-    coinSubmit,
-    coinPayment,
-    coinValue,
-    setCoin,
-  } = useContext(DiaryDispatchContext);
+  const { data, num, setNum, coin, coinPayment } =
+    useContext(DiaryDispatchContext);
   const { onRemove } = useContext(DiaryStateContext);
   const [totalPrice, setTotalPrice] = useState(0);
 
@@ -81,6 +73,14 @@ const Basket = () => {
     } else {
       alert("구매하실 품목을 확인해주세요!");
     }
+  };
+
+  // 삭제하기 함수
+  const onRemoveFn = (targetId, targetName) => {
+    let numTest = { ...num };
+    delete numTest.targetName;
+    setNum(numTest);
+    onRemove(targetId);
   };
 
   return (
@@ -163,7 +163,7 @@ const Basket = () => {
                       <CommonButton
                         type={"negative"}
                         text={"삭제하기"}
-                        onClick={() => onRemove(item.id)}
+                        onClick={() => onRemoveFn(item.id, item.name)}
                       />
                     </div>
                   </td>

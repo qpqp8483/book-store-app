@@ -1,6 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
+import { DiaryDispatchContext } from "../../App";
 import "./coinPopup.scss";
-const CoinPopup = ({ coin, coinChange, coinValue, coinSubmit }) => {
+const CoinPopup = () => {
+  const { coin, coinSubmit, coinValue, coinChange } =
+    useContext(DiaryDispatchContext);
   const coinHandle = (e) => {
     coinChange(e.target.value);
   };

@@ -2,7 +2,7 @@ import "./App.css";
 import "../src/assets/css/reset.css";
 import React, { useEffect, useReducer, useRef, useState } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-
+import CoinPopup from "./components/coinPopup/CoinPopup";
 import Home from "./pages/Home";
 import Basket from "./pages/Basket";
 import Header from "./components/header/Header";
@@ -72,6 +72,7 @@ function App() {
       });
       dataId.current += 1;
     }
+    console.log(num);
   };
 
   //EDIT
@@ -93,6 +94,7 @@ function App() {
       type: "REMOVE",
       targetId,
     });
+    console.log(num);
   };
 
   //RESET
@@ -112,6 +114,15 @@ function App() {
     setNum({});
   };
 
+  const coinChange = (e) => {
+    if (e > 1000000) {
+      alert("100만원을 초과할 수 없습니다.");
+      return;
+    } else {
+      setCoin(e);
+    }
+  };
+
   return (
     <DiaryStateContext.Provider value={{ onCreate, onEdit, onRemove, onReset }}>
       <DiaryDispatchContext.Provider
@@ -124,11 +135,13 @@ function App() {
           coinPayment,
           coinValue,
           setCoin,
+          coinChange,
         }}
       >
         <BrowserRouter>
           <div className="App">
             <Header />
+            <CoinPopup />
             <Routes>
               <Route exact path="/" element={<Home />} />
               <Route path="/basket" element={<Basket />} />

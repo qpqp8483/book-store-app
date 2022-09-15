@@ -1,7 +1,5 @@
 import React, { useContext, useEffect } from "react";
-import { Link } from "react-router-dom";
 import default_img from "../../assets/img/noimg.jpeg";
-import CommonButton from "../button/CommonButton";
 import { DiaryStateContext } from "../../App";
 import "./bookItem.scss";
 
@@ -12,8 +10,8 @@ const BookItem = ({ book, numChange }) => {
     e.target.src = default_img;
   };
   const handleSubmit = (title, price, isbn) => {
+    alert("장바구니에 담겼습니다.");
     onCreate(title, price, isbn);
-    console.log(book);
     numChange(isbn);
   };
 
@@ -36,18 +34,17 @@ const BookItem = ({ book, numChange }) => {
         </p>
         <ul>
           <li>
-            {book.sale_price < 0
-              ? " 금액 정보가 없습니다."
-              : ` ${book.sale_price} 원`}
+            {book.sale_price < 0 ? " 금액 정보 없음" : ` ${book.sale_price} 원`}
           </li>
           <li>
-            <CommonButton
-              type={"positive"}
-              text={"담기"}
+            <button
+              className="basket_btn"
               onClick={() =>
                 handleSubmit(book.title, book.sale_price, book.isbn)
               }
-            />
+            >
+              담기
+            </button>
           </li>
         </ul>
       </div>

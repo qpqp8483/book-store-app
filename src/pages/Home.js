@@ -1,22 +1,11 @@
-import React, { useContext, useEffect, useMemo, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import BookItem from "../components/bookItem/BookItem";
-import CoinPopup from "../components/coinPopup/CoinPopup";
 import { bookSearch } from "../KakaoApi";
-import { DiaryDispatchContext, DiaryStateContext } from "../App";
+import { DiaryDispatchContext } from "../App";
 import "./home.scss";
 
 const Home = () => {
-  const {
-    data,
-    num,
-    setNum,
-    coin,
-    coinSubmit,
-    coinPayment,
-    coinValue,
-    setCoin,
-  } = useContext(DiaryDispatchContext);
-  const { onReset } = useContext(DiaryStateContext);
+  const { num, setNum } = useContext(DiaryDispatchContext);
   const [books, setBooks] = useState([]); // 책 리스트 state 기본값 설정
   const [listUpdate, setListUpdate] = useState(true); // 책 리스트 업데이트될때 상태변환 설정
   const [queryText, setQueryText] = useState("");
@@ -28,11 +17,11 @@ const Home = () => {
     }
   }, [queryText]);
 
-  const kakaoSearch = async (query, reset) => {
+  const kakaoSearch = async (query, reset, pageNum) => {
     const params = {
       query: query,
       sort: "accuracy", // accuracy | recency 정확도 or 최신
-      page: 1, // 페이지번호
+      page: 1,
       size: 10, // 한 페이지에 보여 질 문서의 개수
     };
     const { data } = await bookSearch(params); // api 호출
@@ -40,15 +29,6 @@ const Home = () => {
       setBooks(data.documents);
     } else {
       setBooks(books.concat(data.documents));
-    }
-  };
-
-  const coinChange = (e) => {
-    if (e > 1000000) {
-      alert("100만원을 초과할 수 없습니다.");
-      return;
-    } else {
-      setCoin(e);
     }
   };
 
@@ -67,12 +47,6 @@ const Home = () => {
 
   return (
     <div className="search_section">
-      <CoinPopup
-        coin={coin}
-        coinChange={coinChange}
-        coinValue={coinValue}
-        coinSubmit={coinSubmit}
-      />
       <div>
         <form action="#" onSubmit={handleSubmit} className="search_box">
           <div>

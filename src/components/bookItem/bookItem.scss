@@ -22,11 +22,12 @@
   }
 
   div {
+    position: relative;
     padding-top: 10px;
     width: calc(100% - 130px);
 
     .title {
-      margin: 0 0 15px;
+      margin: 0 0 10px;
       font-size: 18px;
       font-weight: bold;
       text-decoration: none;
@@ -38,30 +39,69 @@
 
     .authors {
       display: block;
-      margin-bottom: 10px;
-      padding-bottom: 15px;
-      font-size: 16px;
+      margin-bottom: 6px;
+      padding-bottom: 6px;
+      font-size: 15px;
       font-weight: 500;
     }
 
-    ul {
-      padding: 0;
-      li {
-        position: relative;
-        margin-bottom: 10px;
-        padding: 0 0 0 10px;
-        font-size: 15px;
-        line-height: 120%;
-        list-style: none;
+    & > p {
+      position: relative;
+      padding: 10px 0;
+      line-height: 130%;
+      font-size: 14px;
+      &::before {
+        position: absolute;
+        content: "";
+        left: 0;
+        top: -2px;
+        width: 15px;
+        height: 1px;
+        background: #bbb;
+      }
+    }
 
-        &::before {
-          content: "";
-          position: absolute;
-          top: 8px;
-          left: 0;
-          width: 5px;
-          height: 1px;
-          background: #000;
+    & > ul {
+      display: flex;
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      padding: 0;
+      height: 50px;
+      background: #fafafa;
+      border: 1px solid #ebebeb;
+      li {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 50%;
+        height: 100%;
+        font-size: 15px;
+        font-weight: 600;
+        line-height: 120%;
+        color: #545454;
+        list-style: none;
+        box-sizing: border-box;
+        &:last-child {
+          border-left: 1px solid #ebebeb;
+        }
+        .basket_btn {
+          display: block;
+          padding-left: 30px;
+          width: 100%;
+          height: 100%;
+          font-weight: 600;
+          background: transparent url(../../assets/img/icon_cart.png) no-repeat
+            85px 14px;
+          background-size: 20px;
+          border: 0px none;
+          border-radius: 0px;
+          box-sizing: border-box;
+          cursor: pointer;
+          &:hover {
+            text-decoration: underline;
+          }
         }
       }
     }
