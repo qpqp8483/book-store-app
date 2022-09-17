@@ -10,7 +10,6 @@ const BookItem = ({ book, numChange }) => {
     e.target.src = default_img;
   };
   const handleSubmit = (title, price, isbn) => {
-    alert("장바구니에 담겼습니다.");
     onCreate(title, price, isbn);
     numChange(isbn);
   };

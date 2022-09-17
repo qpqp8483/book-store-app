@@ -70,6 +70,7 @@ function App() {
           num: 1,
         },
       });
+      alert("장바구니에 담겼습니다.");
       dataId.current += 1;
     }
     console.log(num);
@@ -110,6 +111,7 @@ function App() {
 
   const coinPayment = (stateCoin, actionCoin) => {
     setCoin(stateCoin - actionCoin);
+    alert("구매가 완료되었습니다.");
     onReset();
     setNum({});
   };
