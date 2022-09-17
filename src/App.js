@@ -145,7 +145,7 @@ function App() {
             <Header />
             <CoinPopup />
             <Routes>
-              <Route exact path="/" element={<Home />} />
+              <Route exact path="/search" element={<Home />} />
               <Route path="/basket" element={<Basket />} />
             </Routes>
           </div>
